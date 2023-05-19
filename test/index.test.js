@@ -43,3 +43,19 @@ test('fastify-evervault does not initialize without an API key', t => {
     t.end()
   })
 })
+
+test('fastify-evervault can perform a simple encryption', t => {
+  t.plan(3)
+  const fastify = Fastify()
+  fastify.register(fastifyEvervault, {
+    apiKey: process.env.EVERVAULT_TEST_API_KEY
+  })
+  fastify.ready(err => {
+    t.error(err)
+    const unencrypted = 'test'
+    const encrypted = fastify.evervault.encrypt(unencrypted)
+    t.ok(encrypted)
+    t.notEqual(encrypted, unencrypted)
+    t.end()
+  })
+})
