@@ -55,7 +55,7 @@ test('fastify-evervault can perform a simple encryption', t => {
     const unencrypted = 'test'
     const encrypted = fastify.evervault.encrypt(unencrypted)
     t.ok(encrypted)
-    t.notEqual(encrypted, unencrypted)
+    t.not(encrypted, unencrypted)
     t.end()
   })
 })
