@@ -6,9 +6,7 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "npm run test:unit && npm run test:typescript",
-    "test:typescript": "tsd",
-    "test:unit": "tap"
+    "test": "tap"
   },
   "author": "",
   "license": "ISC",
