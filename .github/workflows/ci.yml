@@ -1,0 +1,43 @@
+name: GitHub CI
+
+on:
+  push:
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Lint code
+        run: npm run lint
+
+  test:
+    needs: linter
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [14, 16, 18]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+      - name: Run tests
+        env:
+          EVERVAULT_TEST_API_KEY: ${{ secrets.EVERVAULT_TEST_API_KEY }}
+        run: npm run test
