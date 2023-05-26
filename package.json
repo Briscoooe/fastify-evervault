@@ -1,6 +1,6 @@
 {
   "name": "@briscoooe/fastify-evervault",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Fastify plugin for integrating the Evervault Node.js SDK",
   "main": "index.js",
   "types": "index.d.ts",
