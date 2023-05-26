@@ -11,7 +11,7 @@ export interface FastifyEvervaultOptions {
 }
 
 
-export type FastifyEvervault = typeof Evervault;
+export type FastifyEvervault = typeof Evervault.prototype;
 
 declare module "fastify" {
   interface FastifyInstance {
