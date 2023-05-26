@@ -44,13 +44,13 @@ test('fastify-evervault does not initialize twice', async (t) => {
   }
 })
 
-test('fastify-evervault can perform a simple encryption', async(t) => {
+test('fastify-evervault can perform a simple encryption', async (t) => {
   t.plan(2)
   const fastify = Fastify()
   await fastify.register(fastifyEvervault, {
     apiKey: process.env.EVERVAULT_TEST_API_KEY
   })
-  await fastify.ready();
+  await fastify.ready()
   const unencryptedStr = 'test'
   const encryptedStr = fastify.evervault.encrypt(unencryptedStr)
   t.ok(encryptedStr)
