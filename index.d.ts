@@ -11,13 +11,12 @@ export interface FastifyEvervaultOptions {
 }
 
 
-export type FastifyEvervault = InstanceType<Evervault>;
+export type FastifyEvervault = InstanceType<typeof Evervault>;
 
 declare module "fastify" {
   interface FastifyInstance {
     evervault: FastifyEvervault;
   }
 }
-
 export const FastifyEvervaultPlugin: FastifyPluginCallback<FastifyEvervaultOptions>;
 export default FastifyEvervaultPlugin;
