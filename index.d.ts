@@ -11,13 +11,11 @@ export interface FastifyEvervaultOptions {
 }
 
 
-// export type FastifyEvervault = Evervault;
+export type FastifyEvervault = Evervault;
 
 declare module "fastify" {
   interface FastifyInstance {
-    evervault: {
-      encrypt: (data: any) => Promise<string>;
-    };
+    evervault: FastifyEvervault;
   }
 }
 
