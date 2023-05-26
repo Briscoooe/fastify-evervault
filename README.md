@@ -5,7 +5,7 @@ ___
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 ![npm](https://img.shields.io/npm/v/fastify-evervault)
 
-Fastify plugin for [Evervault](https://evervault.com/) for sharing the same Evervault client across your Fastify application.
+Fastify plugin for [Evervault](https://evervault.com/) for instantiating and encapsulating the Evervault client.
 
 ## Install
 ```
