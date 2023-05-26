@@ -74,3 +74,9 @@ profile-*
 # lock files
 package-lock.json
 yarn.lock
+
+.travis.yml
+.editorconfig
+.gitattributes
+.gitignore
+.github
