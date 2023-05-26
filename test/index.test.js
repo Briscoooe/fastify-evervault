@@ -5,57 +5,54 @@ const { test } = t
 const Fastify = require('fastify')
 const fastifyEvervault = require('..')
 
-test('fastify-evervault namespace should be exposed', t => {
-  t.plan(2)
+test('fastify-evervault namespace should be exposed', async (t) => {
+  t.plan(1)
   const fastify = Fastify()
-  fastify.register(fastifyEvervault, {
+  await fastify.register(fastifyEvervault, {
     apiKey: 'test'
   })
-  fastify.ready(err => {
-    t.error(err)
-    t.ok(fastify.evervault)
-  })
+  await fastify.ready()
+  t.ok(fastify.evervault)
 })
 
-test('fastify-evervault can encrypt', t => {
-  t.plan(3)
-  const fastify = Fastify()
-  fastify.register(fastifyEvervault, {
-    apiKey: process.env.EVERVAULT_TEST_API_KEY
-  })
-  fastify.ready(err => {
-    t.error(err)
-    t.ok(fastify.evervault)
-    const encrypted = fastify.evervault.encrypt('test')
-    t.ok(encrypted)
-  })
-})
-
-test('fastify-evervault does not initialize without an API key', t => {
+test('fastify-evervault does not initialize without an API key', async (t) => {
   t.plan(2)
   const fastify = Fastify()
-  fastify.register(fastifyEvervault, {
-    apiKey: ''
-  })
-  fastify.ready(err => {
+  try {
+    await fastify.register(fastifyEvervault, {
+      apiKey: ''
+    })
+    await fastify.ready()
+  } catch (err) {
     t.ok(err instanceof Error, 'should throw an error')
     t.equal(err.message, 'apiKey is required', 'should throw an "apiKey is required" error')
-    t.end()
+  }
+})
+test('fastify-evervault does not initialize twice', async (t) => {
+  t.plan(2)
+  const fastify = Fastify()
+  await fastify.register(fastifyEvervault, {
+    apiKey: 'test'
   })
+  try {
+    await fastify.register(fastifyEvervault, {
+      apiKey: 'test'
+    })
+  } catch (err) {
+    t.ok(err instanceof Error, 'should throw an error')
+    t.equal(err.message, 'fastify-evervault is already registered', 'should throw an "fastify-evervault is already registered" error')
+  }
 })
 
-test('fastify-evervault can perform a simple encryption', t => {
-  t.plan(3)
+test('fastify-evervault can perform a simple encryption', async(t) => {
+  t.plan(2)
   const fastify = Fastify()
-  fastify.register(fastifyEvervault, {
+  await fastify.register(fastifyEvervault, {
     apiKey: process.env.EVERVAULT_TEST_API_KEY
   })
-  fastify.ready(err => {
-    t.error(err)
-    const unencrypted = 'test'
-    const encrypted = fastify.evervault.encrypt(unencrypted)
-    t.ok(encrypted)
-    t.not(encrypted, unencrypted)
-    t.end()
-  })
+  await fastify.ready();
+  const unencryptedStr = 'test'
+  const encryptedStr = fastify.evervault.encrypt(unencryptedStr)
+  t.ok(encryptedStr)
+  t.not(encryptedStr, unencryptedStr)
 })

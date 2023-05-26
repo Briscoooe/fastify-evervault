@@ -1,22 +1,21 @@
 const Evervault = require('@evervault/sdk')
 const fp = require('fastify-plugin')
 
-/**
- * @param {import('fastify').FastifyInstance} fastify fastify instance
- * @param {{ apiKey: string }} options fastify plugin options
- * @param {import('fastify').DoneFuncWithErrOrRes} done fastify done function
- * */
-function evervault (fastify, options, done) {
+async function fastifyEvervault (fastify, options) {
   const { apiKey } = options
   if (!apiKey) {
-    return done(new Error('apiKey is required'))
+    throw Error('apiKey is required')
   }
   const evervault = new Evervault(apiKey)
-  fastify.decorate('evervault', evervault)
-  done()
+
+  if (!fastify.evervault) {
+    fastify.decorate('evervault', evervault)
+  } else {
+    throw Error('fastify-evervault is already registered')
+  }
 }
 
-module.exports = fp(evervault, {
+module.exports = fp(fastifyEvervault, {
   fastify: '>=4.x',
   name: 'fastify-evervault'
 })
