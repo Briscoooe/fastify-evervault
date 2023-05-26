@@ -16,4 +16,9 @@ declare namespace fastifyEvervault {
 
 type FastifyEvervault = FastifyPluginAsync<fastifyEvervault.FastifyEvervaultOptions>;
 declare function fastifyEvervault(...params: Parameters<FastifyEvervault>): FastifyEvervault;
+declare module 'fastify' {
+  interface FastifyInstance {
+    evervault: fastifyEvervault.FastifyEvervaultPlugin;
+  }
+}
 export = fastifyEvervault;
