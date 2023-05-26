@@ -1,6 +1,11 @@
 const Evervault = require('@evervault/sdk')
 const fp = require('fastify-plugin')
 
+/**
+ * @param {import('fastify').FastifyInstance} fastify fastify instance
+ * @param {{ apiKey: string }} options fastify plugin options
+ **/
+
 async function fastifyEvervault (fastify, options) {
   const { apiKey } = options
   if (!apiKey) {
