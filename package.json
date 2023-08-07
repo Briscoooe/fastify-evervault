@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@evervault/sdk": "^3.12.4",
+    "@evervault/sdk": "^4.0.1",
     "fastify-plugin": "^4.5.0"
   },
   "devDependencies": {
